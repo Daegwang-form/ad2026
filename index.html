@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5b93d9">
+<title>대광고등학교 2026 입학설명회 · 중학생 진로체험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#5b93d9; --sky-deep:#2f5f9e; --navy:#1b3556; --paper:#f2f7fd; --card:#ffffff;
+  --line:#dbe7f5; --ink:#1b3556; --muted:#5f7591;
+  --design:#3f7fd6; --design-bg:#eaf2fd;
+  --beauty:#e4586f; --beauty-bg:#fdecef;
+  --adm:#2f8f83; --adm-bg:#e6f5f2;
+  --shadow:0 6px 20px rgba(47,95,158,.12);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1b2c; --card:#172740; --line:#27405f; --ink:#e8f0fb; --muted:#9db3cf;
+    --design-bg:#1b3157; --beauty-bg:#3a2130; --adm-bg:#163a3a; --sky:#6ea3e6;
+    --shadow:0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f1b2c; --card:#172740; --line:#27405f; --ink:#e8f0fb; --muted:#9db3cf;
+  --design-bg:#1b3157; --beauty-bg:#3a2130; --adm-bg:#163a3a; --sky:#6ea3e6;
+  --shadow:0 6px 20px rgba(0,0,0,.35);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);-webkit-text-size-adjust:100%}
+body{
+  margin:0;min-height:100%;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:15px;line-height:1.6;word-break:keep-all;
+}
+.wrap{max-width:480px;margin:0 auto;padding:0 16px 120px}
+
+/* Hero */
+.hero{
+  position:relative;margin:0 -16px;padding:34px 22px 56px;color:#fff;overflow:hidden;
+  background:linear-gradient(170deg,#5b93d9 0%,#7fb0ec 100%);
+  border-radius:0 0 34px 34px;
+}
+.hero .school{font-size:13px;font-weight:500;opacity:.92}
+.hero h1{font-family:"Jua","Noto Sans KR",sans-serif;font-weight:400;font-size:33px;line-height:1.25;margin:10px 0 8px;letter-spacing:-.01em}
+.hero p{margin:0;font-size:14px;opacity:.95;max-width:250px}
+.plane{position:absolute;right:-6px;top:26px;width:132px;opacity:.95;transform:rotate(-8deg);animation:glide 5s ease-in-out infinite}
+@keyframes glide{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(-8px,6px) rotate(-5deg)}}
+@media (prefers-reduced-motion:reduce){.plane{animation:none}}
+
+/* Segmented tabs */
+.tabs-wrap{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin:-28px -4px 0;padding:0 4px}
+.tabs{
+  display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;background:var(--card);
+  border-radius:999px;box-shadow:var(--shadow);border:1px solid var(--line);
+}
+.tab{
+  appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:700;
+  font-size:15px;min-height:46px;border-radius:999px;cursor:pointer;
+  transition:background .2s,color .2s;
+}
+.tab[aria-selected="true"]{background:var(--sky-deep);color:#fff}
+:root[data-theme="dark"] .tab[aria-selected="true"]{background:var(--sky);color:#0f1b2c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab[aria-selected="true"]{background:var(--sky);color:#0f1b2c}}
+.tab:focus-visible,.btn:focus-visible,.sess:focus-visible{outline:3px solid #ffb84d;outline-offset:2px}
+
+/* Panels */
+.panel{display:none;padding-top:22px}
+.panel.on{display:block}
+.lead{margin:0 4px 16px}
+.lead h2{font-family:"Jua","Noto Sans KR",sans-serif;font-weight:400;font-size:24px;margin:0 0 4px;line-height:1.3}
+.lead p{margin:0;color:var(--muted);font-size:14px}
+
+/* Experience tickets */
+.ticket{
+  display:grid;grid-template-columns:78px 1fr;background:var(--card);border:1px solid var(--line);
+  border-radius:20px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;position:relative;
+}
+.ticket .date{
+  background:var(--sky);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:14px 6px;text-align:center;position:relative;border-right:2px dashed rgba(255,255,255,.7);
+}
+[data-theme="dark"] .ticket .date{color:#0f1b2c}
+.ticket .round{font-size:12px;font-weight:700;opacity:.9}
+.ticket .md{font-family:"Jua","Noto Sans KR",sans-serif;font-size:24px;line-height:1.15;margin:2px 0}
+.ticket .dow{font-size:13px;font-weight:700}
+.ticket .time{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.55);font-size:12px;font-weight:700;line-height:1.35}
+.courses{padding:6px 14px}
+.course{padding:12px 0 12px 12px;border-left:4px solid var(--design);margin:8px 0}
+.course + .course{border-left-color:var(--beauty)}
+.course .tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 9px;border-radius:999px;background:var(--design-bg);color:var(--design)}
+.course.beauty{border-left-color:var(--beauty)}
+.course.beauty .tag{background:var(--beauty-bg);color:var(--beauty)}
+.course h3{margin:6px 0 2px;font-size:16px;line-height:1.4;font-weight:700}
+.course p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+.legend{display:flex;gap:14px;margin:0 4px 14px;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+
+/* Admission sessions */
+.sess{
+  display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);
+  border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);
+}
+.sess .num{
+  flex:none;width:52px;height:52px;border-radius:16px;background:var(--adm-bg);color:var(--adm);
+  display:flex;align-items:center;justify-content:center;font-family:"Jua",sans-serif;font-size:20px;
+}
+.sess .d{font-size:17px;font-weight:700;line-height:1.35}
+.sess .t{font-size:13.5px;color:var(--muted)}
+.sess .end{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);background:var(--line);padding:3px 10px;border-radius:999px}
+.sess.past{opacity:.55}
+.note{
+  margin:6px 0 0;padding:14px 16px;background:var(--adm-bg);border-radius:16px;font-size:13.5px;color:var(--ink);
+}
+.note b{color:var(--adm)}
+
+.info{margin-top:18px;padding:0 4px;font-size:13px;color:var(--muted)}
+.info dt{font-weight:700;color:var(--ink);margin-top:8px}
+.info dd{margin:0}
+
+/* Bottom action bar */
+.bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);
+}
+.bar .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr;gap:10px}
+.btn{
+  display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:16px;
+  font:inherit;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer;border:0;
+  transition:transform .12s;
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--sky-deep);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+[data-theme="dark"] .btn.primary{background:var(--sky);color:#0f1b2c}
+body.adm .btn.primary{background:var(--adm)}
+.toast{
+  position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);
+  background:var(--navy);color:#fff;padding:11px 18px;border-radius:14px;font-size:14px;opacity:0;
+  pointer-events:none;transition:opacity .2s,transform .2s;z-index:40;max-width:calc(100% - 32px);text-align:center
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <svg class="plane" viewBox="0 0 120 100" aria-hidden="true">
+      <path d="M4 44 L116 6 L84 92 L58 62 Z" fill="#fff" opacity=".95"/>
+      <path d="M58 62 L116 6 L50 52 Z" fill="#cfe2fa"/>
+      <path d="M58 62 L52 86 L70 70 Z" fill="#a9c9f3"/>
+    </svg>
+    <div class="school">대광고등학교</div>
+    <h1>2026 입학설명회<br>&amp; 중학생 진로체험</h1>
+    <p>날짜를 고르고, 아래 버튼으로 바로 신청하세요.</p>
+  </header>
+
+  <div class="tabs-wrap">
+    <div class="tabs" role="tablist" aria-label="행사 선택">
+      <button class="tab" role="tab" id="tab-exp" aria-controls="p-exp" aria-selected="true">중학생 진로체험</button>
+      <button class="tab" role="tab" id="tab-adm" aria-controls="p-adm" aria-selected="false">입학설명회</button>
+    </div>
+  </div>
+
+  <!-- 진로체험 -->
+  <section class="panel on" id="p-exp" role="tabpanel" aria-labelledby="tab-exp">
+    <div class="lead">
+      <h2>10월 중학생 진로체험</h2>
+      <p>토요일 오전 10:00~12:00, 디자인계열과 미용계열 중 하나를 골라 직접 만들어 봐요.</p>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--design)"></i>디자인계열</span>
+      <span><i style="background:var(--beauty)"></i>미용계열</span>
+    </div>
+
+    <article class="ticket">
+      <div class="date"><span class="round">1회차</span><span class="md">10.17</span><span class="dow">토</span><span class="time">10:00<br>~12:00</span></div>
+      <div class="courses">
+        <div class="course design"><span class="tag">디자인계열</span>
+          <h3>나만의 커스텀 캘린더 &amp; 키캡 만들기</h3></div>
+        <div class="course beauty"><span class="tag">미용계열</span>
+          <h3>나만의 색을 찾아보자!</h3>
+          <p>퍼스널컬러 진단 &amp; 톤 착붙 립글로스 만들기</p></div>
+      </div>
+    </article>
+
+    <article class="ticket">
+      <div class="date"><span class="round">2회차</span><span class="md">10.24</span><span class="dow">토</span><span class="time">10:00<br>~12:00</span></div>
+      <div class="courses">
+        <div class="course design"><span class="tag">디자인계열</span>
+          <h3>내손으로 만드는 데일리 굿즈</h3>
+          <p>티셔츠 &amp; 파우치 만들기</p></div>
+        <div class="course beauty"><span class="tag">미용계열</span>
+          <h3>내취향 100% 나만의 네일 팁 만들기!</h3>
+          <p>젤 네일을 활용한 수제 네일 팁 제작</p></div>
+      </div>
+    </article>
+
+    <article class="ticket">
+      <div class="date"><span class="round">3회차</span><span class="md">10.31</span><span class="dow">토</span><span class="time">10:00<br>~12:00</span></div>
+      <div class="courses">
+        <div class="course design"><span class="tag">디자인계열</span>
+          <h3>나만의 감성 소품 만들기</h3>
+          <p>스탬프 &amp; 볼꾸 제작</p></div>
+        <div class="course beauty"><span class="tag">미용계열</span>
+          <h3>보들보들 피부 레시피</h3>
+          <p>피부 타입에 맞춘 수제 팩클렌저 만들기!</p></div>
+      </div>
+    </article>
+
+    <dl class="info">
+      <dt>신청 방법</dt>
+      <dd>아래 ‘신청하기’에서 신청과정과 일자를 선택해 제출해 주세요.</dd>
+      <dt>신청 결과</dt>
+      <dd>‘접수확인’에서 내 신청 내역을 확인할 수 있어요.</dd>
+    </dl>
+  </section>
+
+  <!-- 입학설명회 -->
+  <section class="panel" id="p-adm" role="tabpanel" aria-labelledby="tab-adm" hidden>
+    <div class="lead">
+      <h2>2026 입학설명회</h2>
+      <p>3회 중 원하는 날짜를 골라 신청하세요. 모든 회차 시간은 같아요.</p>
+    </div>
+
+    <div class="sess" data-date="2026-11-08">
+      <div class="num">1회</div>
+      <div><div class="d">2026.11.08 (일)</div><div class="t">오전 10:30 ~ 12:00</div></div>
+    </div>
+    <div class="sess" data-date="2026-11-14">
+      <div class="num">2회</div>
+      <div><div class="d">2026.11.14 (토)</div><div class="t">오전 10:30 ~ 12:00</div></div>
+    </div>
+    <div class="sess" data-date="2026-11-21">
+      <div class="num">3회</div>
+      <div><div class="d">2026.11.21 (토)</div><div class="t">오전 10:30 ~ 12:00</div></div>
+    </div>
+
+    <p class="note"><b>신청 안내</b> 신청 화면에서 ‘신청과정’은 <b>입학설명회</b>를 고른 뒤 ‘신청일자’에서 회차를 선택해 주세요.</p>
+  </section>
+
+  <footer>대광고등학교 · 2026</footer>
+</div>
+
+<div class="bar">
+  <div class="in">
+    <a class="btn primary" id="apply" href="#" target="_blank" rel="noopener noreferrer">신청하기</a>
+    <a class="btn ghost" id="check" href="#" target="_blank" rel="noopener noreferrer">접수확인</a>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ▼ 여기에 구글 폼 링크를 넣으면 버튼이 연결됩니다 */
+var LINKS = {
+  exp: {   // 진로체험: 신청하기 / 접수확인
+    apply: "https://sites.google.com/daegwang.hs.kr/experience2026/%ED%99%88?authuser=0",
+    check: "https://script.google.com/macros/s/AKfycbyLKMBbBqeU-cfY_nfy1I9Tc0PzEE_UFavOQxFmVuwEnQ9tNhvJC50Le9i3ZcM3XTToYw/exec"
+  },
+  adm: {   // 입학설명회: 신청하기 / 접수확인
+    apply: "https://sites.google.com/daegwang.hs.kr/admission2026/%ED%99%88",
+    check: "https://script.google.com/macros/s/AKfycbxULxxhlOm-auPPoeqbxAy788kNQ1hBLlDlAp4m2WTXzhKH3sWkK2T8Wj5OEhArUnW5Sg/exec"
+  }
+};
+
+var tabs = { exp: document.getElementById('tab-exp'), adm: document.getElementById('tab-adm') };
+var panels = { exp: document.getElementById('p-exp'), adm: document.getElementById('p-adm') };
+var applyBtn = document.getElementById('apply'), checkBtn = document.getElementById('check');
+var toastEl = document.getElementById('toast'), toastTimer;
+
+function toast(msg){
+  toastEl.textContent = msg; toastEl.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2200);
+}
+function setTab(key){
+  ['exp','adm'].forEach(function(k){
+    var on = k === key;
+    tabs[k].setAttribute('aria-selected', on);
+    panels[k].classList.toggle('on', on);
+    panels[k].hidden = !on;
+  });
+  document.body.classList.toggle('adm', key === 'adm');
+  refreshLinks(key);
+  try{ history.replaceState(null,'','#'+key); }catch(e){}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+tabs.exp.onclick = function(){ setTab('exp'); };
+tabs.adm.onclick = function(){ setTab('adm'); };
+
+function refreshLinks(key){
+  applyBtn.href = LINKS[key].apply || '#';
+  checkBtn.href = LINKS[key].check || '#';
+}
+function warnIfEmpty(e){
+  if(e.currentTarget.getAttribute('href') === '#'){ e.preventDefault(); toast('링크를 준비 중이에요.'); }
+}
+applyBtn.addEventListener('click', warnIfEmpty);
+checkBtn.addEventListener('click', warnIfEmpty);
+
+/* 지난 회차 표시 */
+var today = new Date(); today.setHours(0,0,0,0);
+document.querySelectorAll('.sess').forEach(function(el){
+  var p = el.dataset.date.split('-');
+  if(new Date(+p[0], +p[1]-1, +p[2]) < today){
+    el.classList.add('past');
+    var s = document.createElement('span'); s.className='end'; s.textContent='종료'; el.appendChild(s);
+  }
+});
+
+setTab(location.hash === '#adm' ? 'adm' : 'exp');
+window.scrollTo(0,0);
+</script>
+</body>
+</html>
