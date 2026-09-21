@@ -49,7 +49,7 @@ body{
 }
 .hero .school{font-size:13px;font-weight:500;opacity:.92}
 .hero h1{font-family:"Jua","Noto Sans KR",sans-serif;font-weight:400;font-size:33px;line-height:1.25;margin:10px 0 8px;letter-spacing:-.01em}
-.hero p{margin:0;font-size:14px;opacity:.95;max-width:250px}
+.hero p{margin:0;font-size:14px;opacity:.95;max-width:270px}
 .plane{position:absolute;right:-6px;top:26px;width:132px;opacity:.95;transform:rotate(-8deg);animation:glide 5s ease-in-out infinite}
 @keyframes glide{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(-8px,6px) rotate(-5deg)}}
 @media (prefers-reduced-motion:reduce){.plane{animation:none}}
@@ -69,6 +69,17 @@ body{
 :root[data-theme="dark"] .tab[aria-selected="true"]{background:var(--sky);color:#0f1b2c}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab[aria-selected="true"]{background:var(--sky);color:#0f1b2c}}
 .tab:focus-visible,.btn:focus-visible,.sess:focus-visible{outline:3px solid #ffb84d;outline-offset:2px}
+
+
+.empty{margin:44px 0 20px;text-align:center;color:var(--muted)}
+.empty svg{color:var(--sky);animation:nudge 1.6s ease-in-out infinite}
+.empty p{margin:10px 0 0;font-size:15px;line-height:1.7}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.empty svg{animation:none}}
+body.none .tab{color:var(--ink)}
+body.none .tabs{border-color:var(--sky);border-width:2px}
+body.none .bar{display:none}
+body.none footer{margin-top:60px}
 
 /* Panels */
 .panel{display:none;padding-top:22px}
@@ -152,7 +163,7 @@ body.adm .btn.primary{background:var(--adm)}
 footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
 </style>
 </head>
-<body>
+<body class="none">
 <div class="wrap">
 
   <header class="hero">
@@ -163,18 +174,23 @@ footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
     </svg>
     <div class="school">대광고등학교</div>
     <h1>2026 입학설명회<br>&amp; 중학생 진로체험</h1>
-    <p>날짜를 고르고, 아래 버튼으로 바로 신청하세요.</p>
+    <p>참여할 행사를 아래에서 먼저 선택해 주세요.<br>선택한 행사의 신청 버튼이 맨 아래에 나와요.</p>
   </header>
 
   <div class="tabs-wrap">
     <div class="tabs" role="tablist" aria-label="행사 선택">
-      <button class="tab" role="tab" id="tab-exp" aria-controls="p-exp" aria-selected="true">중학생 진로체험</button>
+      <button class="tab" role="tab" id="tab-exp" aria-controls="p-exp" aria-selected="false">중학생 진로체험</button>
       <button class="tab" role="tab" id="tab-adm" aria-controls="p-adm" aria-selected="false">입학설명회</button>
     </div>
   </div>
 
+  <div class="empty" id="empty">
+    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p>위에서 참여할 행사를 선택하면<br>일정 안내와 신청 버튼이 나와요.</p>
+  </div>
+
   <!-- 진로체험 -->
-  <section class="panel on" id="p-exp" role="tabpanel" aria-labelledby="tab-exp">
+  <section class="panel" id="p-exp" role="tabpanel" aria-labelledby="tab-exp" hidden>
     <div class="lead">
       <h2>10월 중학생 진로체험</h2>
       <p>토요일 오전 10:00~12:00, 디자인계열과 미용계열 중 하나를 골라 직접 만들어 봐요.</p>
@@ -255,7 +271,7 @@ footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
 
 <div class="bar">
   <div class="in">
-    <a class="btn primary" id="apply" href="#" target="_blank" rel="noopener noreferrer">신청하기</a>
+    <a class="btn primary" id="apply" href="#" target="_blank" rel="noopener noreferrer">진로체험 신청하기</a>
     <a class="btn ghost" id="check" href="#" target="_blank" rel="noopener noreferrer">접수확인</a>
   </div>
 </div>
@@ -290,10 +306,16 @@ function setTab(key){
     panels[k].classList.toggle('on', on);
     panels[k].hidden = !on;
   });
+  document.body.classList.toggle('none', !key);
   document.body.classList.toggle('adm', key === 'adm');
+  document.getElementById('empty').hidden = !!key;
+  if(!key) return;
   refreshLinks(key);
+  applyBtn.textContent = (key === 'adm' ? '입학설명회' : '진로체험') + ' 신청하기';
+  checkBtn.textContent = '접수확인';
   try{ history.replaceState(null,'','#'+key); }catch(e){}
-  window.scrollTo({top:0,behavior:'smooth'});
+  var t = document.querySelector('.tabs-wrap');
+  window.scrollTo({top: Math.max(0, t.offsetTop - 8), behavior:'smooth'});
 }
 tabs.exp.onclick = function(){ setTab('exp'); };
 tabs.adm.onclick = function(){ setTab('adm'); };
@@ -318,8 +340,7 @@ document.querySelectorAll('.sess').forEach(function(el){
   }
 });
 
-setTab(location.hash === '#adm' ? 'adm' : 'exp');
-window.scrollTo(0,0);
+setTab(location.hash === '#adm' ? 'adm' : location.hash === '#exp' ? 'exp' : null);
 </script>
 </body>
 </html>
