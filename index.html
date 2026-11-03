@@ -126,6 +126,8 @@ body.none footer{margin-top:60px}
 .sess .t{font-size:13.5px;color:var(--muted)}
 .sess .end{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);background:var(--line);padding:3px 10px;border-radius:999px}
 .sess.past{opacity:.55}
+.sess.closed{opacity:.7}
+.sess .end.full{color:#fff;background:#e4586f}
 .note{
   margin:6px 0 0;padding:14px 16px;background:var(--adm-bg);border-radius:16px;font-size:13.5px;color:var(--ink);
 }
@@ -251,7 +253,7 @@ footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
       <p>3회 중 원하는 날짜를 골라 신청하세요. 모든 회차 시간은 같아요.</p>
     </div>
 
-    <div class="sess" data-date="2026-11-08">
+    <div class="sess" data-date="2026-11-08" data-closed="true">
       <div class="num">1회</div>
       <div><div class="d">2026.11.08 (일)</div><div class="t">오전 10:30 ~ 12:00</div></div>
     </div>
@@ -335,13 +337,16 @@ function warnIfEmpty(e){
 applyBtn.addEventListener('click', warnIfEmpty);
 checkBtn.addEventListener('click', warnIfEmpty);
 
-/* 지난 회차 표시 */
+/* 지난 회차는 '종료', 마감된 회차(data-closed="true")는 '마감' 표시 */
 var today = new Date(); today.setHours(0,0,0,0);
 document.querySelectorAll('.sess').forEach(function(el){
   var p = el.dataset.date.split('-');
   if(new Date(+p[0], +p[1]-1, +p[2]) < today){
     el.classList.add('past');
     var s = document.createElement('span'); s.className='end'; s.textContent='종료'; el.appendChild(s);
+  } else if(el.dataset.closed === 'true'){
+    el.classList.add('closed');
+    var c = document.createElement('span'); c.className='end full'; c.textContent='마감'; el.appendChild(c);
   }
 });
 
