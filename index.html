@@ -174,12 +174,12 @@ footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
     </svg>
     <div class="school">대광고등학교</div>
     <h1>2026 입학설명회<br>&amp; 중학생 진로체험</h1>
-    <p>참여할 행사를 아래에서 먼저 선택해 주세요.<br>선택한 행사의 신청 버튼이 맨 아래에 나와요.</p>
+    <p>입학설명회 일정을 확인하고<br>맨 아래 버튼으로 신청해 주세요.</p>
   </header>
 
   <div class="tabs-wrap">
     <div class="tabs" role="tablist" aria-label="행사 선택">
-      <button class="tab" role="tab" id="tab-exp" aria-controls="p-exp" aria-selected="false">중학생 진로체험</button>
+      <button class="tab" role="tab" id="tab-exp" aria-controls="p-exp" aria-selected="false">진로체험 (종료)</button>
       <button class="tab" role="tab" id="tab-adm" aria-controls="p-adm" aria-selected="false">입학설명회</button>
     </div>
   </div>
@@ -195,6 +195,7 @@ footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
       <h2>10월 중학생 진로체험</h2>
       <p>토요일 오전 10:00~12:00, 디자인계열과 미용계열 중 하나를 골라 직접 만들어 봐요.</p>
     </div>
+    <p class="note" style="margin:0 0 16px"><b>신청 마감</b> 10월 진로체험은 모두 끝났어요. 참여해 주셔서 감사합니다.</p>
     <div class="legend">
       <span><i style="background:var(--design)"></i>디자인계열</span>
       <span><i style="background:var(--beauty)"></i>미용계열</span>
@@ -280,7 +281,8 @@ footer{margin-top:26px;text-align:center;font-size:12.5px;color:var(--muted)}
 <script>
 /* ▼ 여기에 구글 폼 링크를 넣으면 버튼이 연결됩니다 */
 var LINKS = {
-  exp: {   // 진로체험: 신청하기 / 접수확인
+  exp: {   // 진로체험: 신청하기 / 접수확인 (closed: true 이면 신청 버튼이 '신청 마감'으로 바뀜)
+    closed: true,
     apply: "https://sites.google.com/daegwang.hs.kr/experience2026/%ED%99%88?authuser=0",
     check: "https://script.google.com/macros/s/AKfycbyLKMBbBqeU-cfY_nfy1I9Tc0PzEE_UFavOQxFmVuwEnQ9tNhvJC50Le9i3ZcM3XTToYw/exec"
   },
@@ -299,7 +301,7 @@ function toast(msg){
   toastEl.textContent = msg; toastEl.classList.add('show');
   clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2200);
 }
-function setTab(key){
+function setTab(key, noScroll){
   ['exp','adm'].forEach(function(k){
     var on = k === key;
     tabs[k].setAttribute('aria-selected', on);
@@ -311,9 +313,10 @@ function setTab(key){
   document.getElementById('empty').hidden = !!key;
   if(!key) return;
   refreshLinks(key);
-  applyBtn.textContent = (key === 'adm' ? '입학설명회' : '진로체험') + ' 신청하기';
+  applyBtn.textContent = (key === 'adm' ? '입학설명회' : '진로체험') + (LINKS[key].closed ? ' 신청 마감' : ' 신청하기');
   checkBtn.textContent = '접수확인';
   try{ history.replaceState(null,'','#'+key); }catch(e){}
+  if(noScroll) return;
   var t = document.querySelector('.tabs-wrap');
   window.scrollTo({top: Math.max(0, t.offsetTop - 8), behavior:'smooth'});
 }
@@ -321,10 +324,12 @@ tabs.exp.onclick = function(){ setTab('exp'); };
 tabs.adm.onclick = function(){ setTab('adm'); };
 
 function refreshLinks(key){
-  applyBtn.href = LINKS[key].apply || '#';
+  applyBtn.href = LINKS[key].closed ? '#' : (LINKS[key].apply || '#');
+  applyBtn.dataset.closed = LINKS[key].closed ? '1' : '';
   checkBtn.href = LINKS[key].check || '#';
 }
 function warnIfEmpty(e){
+  if(e.currentTarget.dataset.closed){ e.preventDefault(); toast('신청이 마감되었어요.'); return; }
   if(e.currentTarget.getAttribute('href') === '#'){ e.preventDefault(); toast('링크를 준비 중이에요.'); }
 }
 applyBtn.addEventListener('click', warnIfEmpty);
@@ -340,7 +345,8 @@ document.querySelectorAll('.sess').forEach(function(el){
   }
 });
 
-setTab(location.hash === '#adm' ? 'adm' : location.hash === '#exp' ? 'exp' : null);
+/* 진로체험이 끝나서 처음 열면 입학설명회 안내가 바로 보이게 함 (#exp 로 들어오면 진로체험 탭) */
+setTab(location.hash === '#exp' ? 'exp' : 'adm', !location.hash);
 </script>
 </body>
 </html>
