@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5b93d9">
 <title>대광고등학교 2026 입학설명회 · 중학생 진로체험</title>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -349,6 +351,19 @@ function markClosed(el){
   if(el.classList.contains('past')) return;
   el.classList.add('closed'); addBadge(el, 'full', '마감');
 }
+function unmarkClosed(el){
+  if(el.dataset.closed === 'true') return;
+  el.classList.remove('closed');
+  var b = el.querySelector('.end.full'); if(b) b.remove();
+}
+/* 시트에서 받은 마감 목록을 화면에 반영 (마감 해제된 회차는 표시를 지움) */
+function applyClosed(closed){
+  document.querySelectorAll('.sess').forEach(function(el){
+    var key = el.dataset.date.replace(/-/g, '.');   // 2026-11-08 → 2026.11.08
+    var isClosed = closed.some(function(d){ return String(d).indexOf(key) !== -1; });
+    if(isClosed) markClosed(el); else unmarkClosed(el);
+  });
+}
 document.querySelectorAll('.sess').forEach(function(el){
   var p = el.dataset.date.split('-');
   if(new Date(+p[0], +p[1]-1, +p[2]) < today){
@@ -357,15 +372,21 @@ document.querySelectorAll('.sess').forEach(function(el){
     markClosed(el);
   }
 });
+/* 구글 시트 조회는 2초 정도 걸려서, 지난번에 받은 마감 정보를 먼저 바로 보여 주고
+   새 정보가 도착하면 다시 맞춥니다. */
+var CLOSED_KEY = 'adm2026-closed';
+try{
+  var saved = JSON.parse(localStorage.getItem(CLOSED_KEY) || 'null');
+  if(Array.isArray(saved)) applyClosed(saved);
+}catch(e){}
 fetch(LINKS.adm.check + '?action=status')
   .then(function(r){ return r.json(); })
   .then(function(closed){
-    document.querySelectorAll('.sess').forEach(function(el){
-      var key = el.dataset.date.replace(/-/g, '.');   // 2026-11-08 → 2026.11.08
-      if(closed.some(function(d){ return String(d).indexOf(key) !== -1; })) markClosed(el);
-    });
+    if(!Array.isArray(closed)) return;
+    applyClosed(closed);
+    try{ localStorage.setItem(CLOSED_KEY, JSON.stringify(closed)); }catch(e){}
   })
-  .catch(function(){ /* 조회 실패 시 마감 표시만 생략 */ });
+  .catch(function(){ /* 조회 실패 시 저장된 표시를 그대로 둠 */ });
 
 /* 진로체험이 끝나서 처음 열면 입학설명회 안내가 바로 보이게 함 (#exp 로 들어오면 진로체험 탭) */
 setTab(location.hash === '#exp' ? 'exp' : 'adm', !location.hash);
